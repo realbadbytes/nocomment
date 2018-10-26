@@ -18,7 +18,7 @@ After dialog is completed, the docstring will be generated and written to a temp
 
 # Requirements
 
-GUI - PySide2
+GUI - PySide2?
 
 Filesystem interaction - os, PySide2.QtCore.QDir, PySide2.QtWidgets.QFileSystemModel
 
