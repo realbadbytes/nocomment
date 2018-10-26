@@ -1,4 +1,4 @@
-== Design =================
+# Design
 
 GUI interface
 
@@ -16,10 +16,12 @@ Function dialog is the main purpose of this tool. All required information to cr
 
 After dialog is completed, the docstring will be generated and written to a temporary .py file. User will be given opportunity to write changes to actual source file.
 
-== Requirements =================
+# Requirements
 
 GUI - PySide2
+
 Filesystem interaction - os, PySide2.QtCore.QDir, PySide2.QtWidgets.QFileSystemModel
+
 Target module loading/information extraction - importlib
 
 
