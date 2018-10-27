@@ -3,13 +3,14 @@
 
 
 #== TESTING ======================= 
-from test_targets import target1
+from test_targets import multiproc_queue as target1
 #== TESTING =======================
 
 import logging
 import time
 from collections import OrderedDict
 from inspect import isfunction, signature
+from docstring_generators.generators import RestviewDocGenerator
 
 
 logging.basicConfig(format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p', level=logging.DEBUG)
@@ -75,44 +76,51 @@ def ingest_docs_from_user(undoc_funcs, target):
     return new_docs
 
 
-def generate_rst(doc_dict):
-    """ Generates valid reST (restructured text format) for inclusion in source files.
-
-    :param doc_dict: dict containing entered comments for function params and return value
-    :returns: string of valid reST
-    """
-    docstring = ''
-    for func_name, func_dict in doc_dict.items():
-        logging.info('Generating reST for {0}'.format(func_name))
-        for item, desc in func_dict.items():
-            # Detect params
-            if item[:5] == 'param':
-                # Append param name and description to reST-style docstring
-                docstring += ':param ' + item[6:] + ': ' + desc + '\n'
-            # Append return value doc, it'll be last in the OrderedDict
-            else:
-                docstring += ':returns: ' + desc
-
-    return docstring
-
-
 def main():
     """ Main nocomment script."""
     logging.info('nocomment starts')
+
     # Check all functions in target file for valid docstring
     docstrings = get_docstrings(target1)
     logging.info('Processed {0} functions in target module'.format(len(docstrings)))
+
     # Invalid or non-existent docstring? Prompt for comments
     undoc_funcs = check_docstring_exist(docstrings)
     logging.info('Function(s) without proper documentation: {0}'.format(' '.join(undoc_funcs)))
+
     # Get new docs for discovered undocumented functions
     new_docs = ingest_docs_from_user(undoc_funcs, target1)
-    # Generete reST documentation from user input
-    print('Generated reST:\n\n {0}'.format(generate_rst(new_docs)))
+
+    # Generete rst documentation from user input
+    rst_obj = RestviewDocGenerator()
+    rst_docstring = rst_obj.generate_docstring(new_docs)
+    logging.info('Generated rst-style docstring:\n {0}'.format(rst_docstring))
 
 
 if __name__ == '__main__':
     main()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
