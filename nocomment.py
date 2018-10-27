@@ -8,6 +8,7 @@ from test_targets import target1
 
 import logging
 import time
+from collections import OrderedDict
 from inspect import isfunction, signature
 
 
@@ -49,29 +50,50 @@ def ingest_docs_from_user(undoc_funcs, target):
     :param target: loaded target python module
     :returns: dict of dicts. undocumented functions with associated raw documentation comments.
     """
-    new_docs = {}
+    new_docs = OrderedDict()
     # Iterate through undoc_funcs, examine params of each function in target module.
 
-    for funcname in undoc_funcs:
+    for func_name in undoc_funcs:
         # Init dict for this function's params
-        func_docs = {}
-        target_func = getattr(target, funcname)
+        func_docs = OrderedDict()
+        target_func = getattr(target, func_name)
         sig = signature(target_func)
-        logging.info('Ingesting doc for {0} with signature {1}'.format(funcname, str(sig)))
+        logging.info('Ingesting doc for {0} with signature {1}'.format(func_name, str(sig)))
         params = sig.parameters
 
         for p in params:
-            # This will take place in GUI
-            func_docs[p] = input('Enter type and description for parameter {0} in {1}: '.format(p, funcname))
+            p = 'param:'+p
+            func_docs[p] = input('Enter type and description for parameter {0} in {1}: '.format(p, func_name))
 
         # Ingest return value doc
         ret_doc = input('Enter return value description: ')
         func_docs['returns'] = ret_doc
 
         # Place param comment dict into return new_docs dict
-        new_docs[funcname] = func_docs
+        new_docs[func_name] = func_docs
 
     return new_docs
+
+
+def generate_rst(doc_dict):
+    """ Generates valid reST (restructured text format) for inclusion in source files.
+
+    :param doc_dict: dict containing entered comments for function params and return value
+    :returns: string of valid reST
+    """
+    docstring = ''
+    for func_name, func_dict in doc_dict.items():
+        logging.info('Generating reST for {0}'.format(func_name))
+        for item, desc in func_dict.items():
+            # Detect params
+            if item[:5] == 'param':
+                # Append param name and description to reST-style docstring
+                docstring += ':param ' + item[6:] + ': ' + desc + '\n'
+            # Append return value doc, it'll be last in the OrderedDict
+            else:
+                docstring += ':returns: ' + desc
+
+    return docstring
 
 
 def main():
@@ -85,8 +107,21 @@ def main():
     logging.info('Function(s) without proper documentation: {0}'.format(' '.join(undoc_funcs)))
     # Get new docs for discovered undocumented functions
     new_docs = ingest_docs_from_user(undoc_funcs, target1)
-    print(new_docs)
+    # Generete reST documentation from user input
+    print('Generated reST:\n\n {0}'.format(generate_rst(new_docs)))
 
 
 if __name__ == '__main__':
     main()
+
+
+
+
+
+
+
+
+
+
+
+
