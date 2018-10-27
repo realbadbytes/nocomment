@@ -51,18 +51,26 @@ def ingest_docs_from_user(undoc_funcs, target):
     """
     new_docs = {}
     # Iterate through undoc_funcs, examine params of each function in target module.
+
     for funcname in undoc_funcs:
         # Init dict for this function's params
-        func_doc = {}
+        func_docs = {}
         target_func = getattr(target, funcname)
         sig = signature(target_func)
         logging.info('Ingesting doc for {0} with signature {1}'.format(funcname, str(sig)))
         params = sig.parameters
+
         for p in params:
             # This will take place in GUI
-            func_doc[p] = input('Enter comment for parameter {0} in {1}'.format(p, funcname))
+            func_docs[p] = input('Enter type and description for parameter {0} in {1}: '.format(p, funcname))
+
+        # Ingest return value doc
+        ret_doc = input('Enter return value description: ')
+        func_docs['returns'] = ret_doc
+
         # Place param comment dict into return new_docs dict
-        new_docs[funcname] = func_doc
+        new_docs[funcname] = func_docs
+
     return new_docs
 
 
