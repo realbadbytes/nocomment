@@ -4,5 +4,7 @@ Enable developers to document their code flawlessly and easily by removing the r
 
 # How
 
-TBD
-
+git clone http://github.com/realbadbytes/nocomment
+cd nocomment
+sudo python3 -m pip install -r requirements.txt
+./nocomment
