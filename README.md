@@ -12,7 +12,7 @@ sudo python3 -m pip install -r requirements.txt
 
 ./core.py [target module]
 
-NOTE: Target module must be in current directory. Output will be test_output.py
+NOTE: Target module must be in current directory. Omit .py extension for target module when running the tool. Output will be test_output.py
 
 # Show me
 
