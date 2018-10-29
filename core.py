@@ -30,7 +30,7 @@ def get_classes(target):
         # This avoids a massive list of classes from imported modules.
         if isclass(obj) and obj.__module__ == target.__name__:
             classes.append(obj)
-    logging.info('Found classe(s): {0}'.format(classes))
+    logging.info('Found user-defined class(es): {0}'.format(classes))
     return classes
 
 
