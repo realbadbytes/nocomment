@@ -53,7 +53,7 @@ Employee.__name__: Employee
 Employee.__module__: employee_class
 Employee.__bases__: (<class 'object'>,)
 Employee.__dict__: {'__weakref__': <attribute '__weakref__' of 'Employee' objects>, '__module__': 'employee_class', '__init__': <function Employee.__init__ at 0x7f1a8057ab70>, 'empCount': 2, '__dict__': <attribute '__dict__' of 'Employee' objects>, 'displayCount': <function Employee.displayCount at 0x7f1a8057abf8>, 'displayEmployee': <function Employee.displayEmployee at 0x7f1a8057ac80>, '__doc__': 'Common base class for all employees'}
-10/28/2018 11:24:48 PM Found classe(s): [<class 'employee_class.Employee'>]
+10/28/2018 11:24:48 PM Found user-defined class(es): [<class 'employee_class.Employee'>]
 Enter brief function description for displayCount: Show number of Employees.
 10/28/2018 11:24:55 PM Ingesting doc for displayCount with signature (self)
 Enter type and description for parameter param:self in displayCount: self object
