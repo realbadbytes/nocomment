@@ -72,13 +72,13 @@ def get_docstrings(target, functions):
     for funcname, theclass in functions.items():
         # Init dict for this function's params
         func_docs = OrderedDict()
+        func_docs['description'] = input('Enter brief function description for {0}: '.format(funcname))
 
         if theclass is 'noclass':
             myfunc = getattr(target, funcname)
 
             if myfunc.__doc__ is None:
                 # Init dict for this function's params
-                func_docs = OrderedDict()
                 myfunc = getattr(target, funcname)
                 sig = signature(myfunc)
                 logging.info('Ingesting doc for {0} with signature {1}'.format(funcname, str(sig)))
@@ -113,6 +113,38 @@ def get_docstrings(target, functions):
         
     return new_docs
 
+def read_target_source(target):
+    """ Processes file so we can write newly minted docstrings.
+
+    :param target: Target file
+    :returns: List of lines in target file
+    """
+    f = open(target.__file__)
+    file_contents = f.readlines()
+    return file_contents
+
+
+def generate_commented_source(file_contents, new_docs):
+    """ Creates new file with inserted docstrings
+
+    :param file_contents: List of all source lines in target module
+    :param new_docs: New docstrings to insert
+    """
+    regex_terms = {}
+    # Prepare regex terms (ew)
+    for funcname, docstring in new_docs.items():
+        # def funcname(
+        regex_terms[funcname] = 'def ' + funcname
+    # Open output file
+    f = open('test_output.py', 'w+')
+    # Begin write, checking for def func(...) lines
+    for line in file_contents:
+        f.write(line)
+        for funcname, search_term in regex_terms.items():
+            if str(search_term) in line:
+                f.write(new_docs[funcname])
+    # If new_doc function name matches detected func, write def line, then write new_doc contents
+
 
 def main():
     """ Main nocomment script."""
@@ -127,46 +159,19 @@ def main():
     # Ingest docstrings
     new_docs = get_docstrings(target1, functions)
 
-    # Generete rst documentation from user input
+    # Prepare to insert docstrings to target .py file
+    file_contents = read_target_source(target1)
+
+    # Generate rst documentation from user input
     rst_obj = RestviewDocGenerator()
+    final_docs = {}
     for doc in new_docs.items():
         logging.info('Generating Restview docstring for {0}'.format(doc[0]))
-        print(rst_obj.gen_func_docstring(doc))
+        final_docs[doc[0]] = rst_obj.gen_func_docstring(doc)
+
+    generate_commented_source(file_contents, final_docs)
 
 
 if __name__ == '__main__':
     main()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

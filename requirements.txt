@@ -1,1 +1,2 @@
 pyside2
+pyqt5

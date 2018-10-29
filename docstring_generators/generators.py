@@ -36,15 +36,18 @@ class RestviewDocGenerator(AbstractDocGenerator):
         :param doc_dict: dict containing entered comments for function params and return value
         :returns: string of valid reST
         """
-        docstring = ''
-        docstring += '\n\n'
-        for item, desc in doc_dict[1].items():
-            if item[:5] == 'param':
-                docstring += ':param ' + item[6:] + ': ' + desc + '\n'
+        docstring = '\"\"\" '
+        for item, contents in doc_dict[1].items():
+            if item == 'description':
+                docstring += contents + '\n'
+            elif item[:5] == 'param':
+                docstring += ':param ' + item[6:] + ': ' + contents + '\n'
             # Append return value doc, it'll be last in the OrderedDict
+            elif item == 'returns':
+                docstring += ':returns: ' + contents
             else:
-                docstring += ':returns: ' + desc
-        docstring += '\n'
+                print('doc_dict parsing error.')
+        docstring += '\"\"\"\n'
         return docstring
 
 
