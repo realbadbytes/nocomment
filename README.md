@@ -1,6 +1,6 @@
 # Why
 
-Enable developers to document their code flawlessly and easily by removing the requirement for a developer to know standard docstring syntax, like RST.
+Enable Python developers to document their code flawlessly and easily by removing the requirement for a developer to know standard docstring syntax, like RST.
 
 # How
 
@@ -12,7 +12,7 @@ sudo python3 -m pip install -r requirements.txt
 
 ./core.py [target module]
 
-NOTE: Target module must be in current directory. Output will be test_output.py
+NOTE: Target module must be in current directory. Omit .py extension for target module when running the tool. Output will be test_output.py
 
 # Show me
 
