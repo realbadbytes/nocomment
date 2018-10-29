@@ -20,6 +20,7 @@ NOTE: Target module must be in current directory. Omit .py extension for target 
 
  ```python
 #!/usr/bin/python3
+# employee_class.py
 
 class Employee:
     'Common base class for all employees'
@@ -77,6 +78,7 @@ Enter return value description: None
 
 ```python
 #!/usr/bin/python3
+# test_output.py
 
 class Employee:
     'Common base class for all employees'
