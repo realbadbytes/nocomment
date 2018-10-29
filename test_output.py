@@ -3,16 +3,20 @@ from PyQt5.QtWidgets import QApplication, QWidget, QInputDialog, QLineEdit, QFil
 from PyQt5.QtGui import QIcon
 
 def testfunc1():
-""" This is a brief description
-:returns: Returns nothing"""
+""" Test description 1
+:returns: Test return value 1
+"""
+
     pass
  
 class App(QWidget):
  
     def __init__(self):
-""" This is the init function
-:param self: self object
-:returns: Returns nothing"""
+""" Test description 2
+:param self: Self object
+:returns: Test return value 2
+"""
+
         super().__init__()
         self.title = 'PyQt5 file dialogs - pythonspot.com'
         self.left = 10
@@ -24,7 +28,9 @@ class App(QWidget):
     def initUI(self):
 """ 
 :param self: 
-:returns: """
+:returns: 
+"""
+
         self.setWindowTitle(self.title)
         self.setGeometry(self.left, self.top, self.width, self.height)
  
@@ -37,7 +43,9 @@ class App(QWidget):
     def openFileNameDialog(self):    
 """ 
 :param self: 
-:returns: """
+:returns: 
+"""
+
         options = QFileDialog.Options()
         options |= QFileDialog.DontUseNativeDialog
         fileName, _ = QFileDialog.getOpenFileName(self,"QFileDialog.getOpenFileName()", "","All Files (*);;Python Files (*.py)", options=options)
@@ -47,7 +55,9 @@ class App(QWidget):
     def openFileNamesDialog(self):    
 """ 
 :param self: 
-:returns: """
+:returns: 
+"""
+
         options = QFileDialog.Options()
         options |= QFileDialog.DontUseNativeDialog
         files, _ = QFileDialog.getOpenFileNames(self,"QFileDialog.getOpenFileNames()", "","All Files (*);;Python Files (*.py)", options=options)
@@ -57,7 +67,9 @@ class App(QWidget):
     def saveFileDialog(self):    
 """ 
 :param self: 
-:returns: """
+:returns: 
+"""
+
         options = QFileDialog.Options()
         options |= QFileDialog.DontUseNativeDialog
         fileName, _ = QFileDialog.getSaveFileName(self,"QFileDialog.getSaveFileName()","","All Files (*);;Text Files (*.txt)", options=options)

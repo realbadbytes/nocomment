@@ -47,7 +47,7 @@ class RestviewDocGenerator(AbstractDocGenerator):
                 docstring += ':returns: ' + contents
             else:
                 print('doc_dict parsing error.')
-        docstring += '\"\"\"\n'
+        docstring += '\n\"\"\"\n\n'
         return docstring
 
 
