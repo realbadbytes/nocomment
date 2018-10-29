@@ -10,4 +10,6 @@ cd nocomment
 
 sudo python3 -m pip install -r requirements.txt
 
-./core.py
+./core.py [target module]
+
+NOTE: Target module must be in current directory. Output will be test_output.py

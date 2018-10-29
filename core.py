@@ -3,11 +3,13 @@
 
 
 #== TESTING ======================= 
-from test_targets import test_file_dialog as target1
+# from test_targets import test_file_dialog as target1
 #== TESTING =======================
 
 import logging
 import time
+import sys
+from importlib import import_module
 from collections import OrderedDict
 from inspect import isfunction, signature, getmembers, isclass
 from docstring_generators.generators import RestviewDocGenerator
@@ -150,17 +152,20 @@ def main():
     """ Main nocomment script."""
     logging.info('nocomment starts')
 
+    # Get target
+    target = import_module(sys.argv[1])
+
     # Enumerate classes defined in target
-    classes = get_classes(target1)
+    classes = get_classes(target)
 
     # Enumerate functions defined in target
-    functions = get_functions(target1, classes)
+    functions = get_functions(target, classes)
 
     # Ingest docstrings
-    new_docs = get_docstrings(target1, functions)
+    new_docs = get_docstrings(target, functions)
 
     # Prepare to insert docstrings to target .py file
-    file_contents = read_target_source(target1)
+    file_contents = read_target_source(target)
 
     # Generate rst documentation from user input
     rst_obj = RestviewDocGenerator()

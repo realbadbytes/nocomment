@@ -39,7 +39,7 @@ class RestviewDocGenerator(AbstractDocGenerator):
         docstring = '\"\"\" '
         for item, contents in doc_dict[1].items():
             if item == 'description':
-                docstring += contents + '\n'
+                docstring += contents + '\n\n'
             elif item[:5] == 'param':
                 docstring += ':param ' + item[6:] + ': ' + contents + '\n'
             # Append return value doc, it'll be last in the OrderedDict
