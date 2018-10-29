@@ -10,7 +10,15 @@ class AbstractDocGenerator(ABC):
         pass
 
     @abstractmethod
-    def generate_docstring(self):
+    def gen_class_docstring(self):
+        pass
+
+    @abstractmethod
+    def gen_func_docstring(self):
+        pass
+
+    @abstractmethod
+    def gen_param_docstring(self):
         pass
 
 
@@ -18,8 +26,11 @@ class RestviewDocGenerator(AbstractDocGenerator):
     """ Defines the reST-style docstring generator class."""
     def __init__(self):
         super().__init__()
+    
+    def gen_class_docstring(self):
+        pass
 
-    def generate_docstring(self, doc_dict):
+    def gen_func_docstring(self, doc_dict):
         """ Returns a well-formed reST-style docstring for inclusion in a Python source file.
 
         :param doc_dict: dict containing entered comments for function params and return value
@@ -38,5 +49,8 @@ class RestviewDocGenerator(AbstractDocGenerator):
                     docstring += ':returns: ' + desc
 
         return docstring
+
+    def gen_param_docstring(self):
+        pass
 
 
