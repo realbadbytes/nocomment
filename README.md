@@ -45,7 +45,7 @@ print ("Employee.__module__:", Employee.__module__)
 print ("Employee.__bases__:", Employee.__bases__)
 print ("Employee.__dict__:", Employee.__dict__ )
 ```
-
+**Running nocomment**
 ```
 user@ubuntu:~/nocomment$ ./core.py employee_class
 10/28/2018 11:24:48 PM nocomment starts
