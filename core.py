@@ -149,6 +149,7 @@ def generate_commented_source(file_contents, new_docs):
                     # Prepend 4 spaces, add 4 spaces after each newline
                     new_docs[funcname] = '    ' + new_docs[funcname]
                     new_docs[funcname] = new_docs[funcname].replace('\n', '\n    ')
+                    new_docs[funcname] = new_docs[funcname][:-4]
                 f.write(new_docs[funcname])
     # If new_doc function name matches detected func, write def line, then write new_doc contents
 
