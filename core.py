@@ -144,6 +144,11 @@ def generate_commented_source(file_contents, new_docs):
         f.write(line)
         for funcname, search_term in regex_terms.items():
             if str(search_term) in line:
+                # Account for indentation i.e func in class
+                if line.startswith('    '):
+                    # Prepend 4 spaces, add 4 spaces after each newline
+                    new_docs[funcname] = '    ' + new_docs[funcname]
+                    new_docs[funcname] = new_docs[funcname].replace('\n', '\n    ')
                 f.write(new_docs[funcname])
     # If new_doc function name matches detected func, write def line, then write new_doc contents
 
@@ -174,6 +179,7 @@ def main():
         logging.info('Generating Restview docstring for {0}'.format(doc[0]))
         final_docs[doc[0]] = rst_obj.gen_func_docstring(doc)
 
+    # Create final output file
     generate_commented_source(file_contents, final_docs)
 
 
