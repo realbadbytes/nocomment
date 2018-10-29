@@ -19,8 +19,8 @@ logging.basicConfig(format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S
 def get_classes(target):
     """ Enumerates classes in target module.
 
-    :param target: loaded target python module
-    :returns: dict of discovered classes
+    :param target: Loaded target python module
+    :returns: Dict of discovered classes
     """
     classes = []
     for name, obj in getmembers(target):
@@ -33,6 +33,13 @@ def get_classes(target):
 
 
 def get_functions(target, classes):
+    """ Enumerates functions in target module. Includes both functions outside of classes
+    and functions within user-defined classes.
+
+    :param target: Loaded target python module
+    :param classes: List of user-defined classes in target module
+    :returns: Dict of discovered functions
+    """
     # Each function key:value where key==function name and value==containing class
     # if no class, value="noclass"
     functions = {}
@@ -50,17 +57,15 @@ def get_functions(target, classes):
                 # Use inspect.getdoc() instead?
                 functions[funcname] = c
 
-    print(functions)
     return functions
 
 
-
 def get_docstrings(target, functions):
-    """ Parses docstrings in target module.
+    """ Proceses functions in target module and prompts user for documentation if none exists.
 
-    :param target: loaded target python module
-    :param classes: list of defined classes in target module
-    :returns: dict of functions and their docstring
+    :param target: Loaded target python module
+    :param functions: List of defined functions in target module
+    :returns: Dict containing raw comments entered by user
     """
     new_docs = {}
 
@@ -109,19 +114,6 @@ def get_docstrings(target, functions):
     return new_docs
 
 
-def check_docstring_exist(func_docstring_dict):
-    """ Checks processed functions for docstrings.
-
-    :param func_docstring_dict: dict of functions and their associated docstrings
-    :returns: list of undocumented functions
-    """
-    empty_docstrings = []
-    for funcname, docstring in func_docstring_dict.items():
-        if docstring is None:
-            empty_docstrings.append(funcname)
-    return empty_docstrings
-
-
 def main():
     """ Main nocomment script."""
     logging.info('nocomment starts')
@@ -132,14 +124,14 @@ def main():
     # Enumerate functions defined in target
     functions = get_functions(target1, classes)
 
-    # Check all functions in target file for valid docstrings
+    # Ingest docstrings
     new_docs = get_docstrings(target1, functions)
-    logging.info('Processed {0} functions in target module'.format(len(new_docs)))
 
     # Generete rst documentation from user input
     rst_obj = RestviewDocGenerator()
-    rst_docstring = rst_obj.gen_func_docstring(new_docs)
-    logging.info('Generated rst-style docstring:\n {0}'.format(rst_docstring))
+    for doc in new_docs.items():
+        logging.info('Generating Restview docstring for {0}'.format(doc[0]))
+        print(rst_obj.gen_func_docstring(doc))
 
 
 if __name__ == '__main__':

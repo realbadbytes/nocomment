@@ -37,18 +37,16 @@ class RestviewDocGenerator(AbstractDocGenerator):
         :returns: string of valid reST
         """
         docstring = ''
-        for func_name, func_dict in doc_dict.items():
-            docstring += '\n'
-            for item, desc in func_dict.items():
-                # Detect params
-                if item[:5] == 'param':
-                    # Append param name and description to reST-style docstring
-                    docstring += ':param ' + item[6:] + ': ' + desc + '\n'
-                # Append return value doc, it'll be last in the OrderedDict
-                else:
-                    docstring += ':returns: ' + desc
-
+        docstring += '\n\n'
+        for item, desc in doc_dict[1].items():
+            if item[:5] == 'param':
+                docstring += ':param ' + item[6:] + ': ' + desc + '\n'
+            # Append return value doc, it'll be last in the OrderedDict
+            else:
+                docstring += ':returns: ' + desc
+        docstring += '\n'
         return docstring
+
 
     def gen_param_docstring(self):
         pass
